@@ -5,10 +5,9 @@ import by.epam.buber.controller.command.Command;
 import by.epam.buber.controller.CommandResult;
 import by.epam.buber.model.RideOrder;
 import by.epam.buber.model.enums.CarType;
+import by.epam.buber.service.Impl.OrderServiceImpl;
 import by.epam.buber.service.OrderService;
 import by.epam.buber.util.ServiceException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +23,7 @@ public class OrdersChoosingCommand implements Command {
             throws ServiceException {
         HttpSession session = request.getSession();
         CarType carType = (CarType) session.getAttribute("car_type");
-        OrderService service = new OrderService();
+        OrderService service = new OrderServiceImpl();
         List<RideOrder> orders = service.getAvailableOrders(carType);
         request.setAttribute("orders", orders);
         return new CommandResult(AVAILABLE_ORDERS, Action.FORWARD);

@@ -33,15 +33,6 @@ public abstract class AbstractDAO<T extends Entity> implements DAO<T> {
             throw new DAOException(getEntityName() + " not found");
         }
         return entities.get(0);
-        /*try {
-        } catch (IndexOutOfBoundsException exception) {
-            throw new DAOException(getEntityName() + " not found", exception);
-        }*/
-        /*T entity = null;
-        if(!entities.isEmpty()) {
-            entity = entities.get(0);
-        }
-        return entity;*/
     }
 
     @Override
@@ -80,7 +71,13 @@ public abstract class AbstractDAO<T extends Entity> implements DAO<T> {
 
     protected int executeUpdate(String sql, Object... params) throws DAOException {
         try (PreparedStatement statement = prepareStatement(sql, params)) {
-        return statement.executeUpdate();
+            int result = statement.executeUpdate();
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1);
+            } else  {
+                return result;
+            }
         } catch (SQLException exception) {
             throw new DAOException(exception.getMessage(), exception);
         }
@@ -97,7 +94,7 @@ public abstract class AbstractDAO<T extends Entity> implements DAO<T> {
             }
         }
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             for (int i=0; i<allParameters.size(); i++) {
                 statement.setObject(i+1, allParameters.get(i));
             }

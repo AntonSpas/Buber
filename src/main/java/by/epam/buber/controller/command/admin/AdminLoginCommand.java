@@ -8,6 +8,7 @@ import by.epam.buber.controller.CommandResult;
 import by.epam.buber.model.Admin;
 import by.epam.buber.model.enums.UserType;
 import by.epam.buber.service.AdminService;
+import by.epam.buber.service.Impl.AdminServiceImpl;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class AdminLoginCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
             throws ServiceException {
-        AdminService service = new AdminService();
+        AdminService service = new AdminServiceImpl();
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 

@@ -41,6 +41,8 @@ public class CommandFactory {
                         return new LogoutCommand();
                     case AVAILABLE_ORDERS:
                         return new OrdersChoosingCommand();
+                    case RIDE_ORDER:
+                        return new AccountCheckingCommand();
                     case RIDE:
                         return new OrderInfoRefreshingCommand();
                     case CHOSEN_ORDER:

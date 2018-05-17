@@ -6,6 +6,7 @@ import by.epam.buber.controller.CommandResult;
 import by.epam.buber.model.Client;
 import by.epam.buber.model.Entity;
 import by.epam.buber.model.RideOrder;
+import by.epam.buber.service.Impl.OrderServiceImpl;
 import by.epam.buber.service.OrderService;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ public class OrderAcceptanceCommand implements Command {
         HttpSession session = request.getSession();
         Integer driverId = (Integer) session.getAttribute("driver_id");
 
-        OrderService service = new OrderService();
+        OrderService service = new OrderServiceImpl();
         List<Entity> entities = service.acceptOrder(orderId, driverId);
         RideOrder order = (RideOrder) entities.get(0);
         Client client = (Client) entities.get(1);

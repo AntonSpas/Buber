@@ -10,8 +10,4 @@ public interface DAO<T extends Entity> {
     T findById(int id) throws DAOException;
     boolean delete(int id) throws DAOException;
     T save(T entity) throws DAOException;
-
-    /*
-    boolean delete(T entity);
-    boolean create(T entity) throws DAOException;*/
 }

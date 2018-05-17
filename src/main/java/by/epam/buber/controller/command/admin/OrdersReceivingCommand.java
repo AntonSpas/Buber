@@ -4,6 +4,7 @@ import by.epam.buber.controller.Action;
 import by.epam.buber.controller.CommandResult;
 import by.epam.buber.controller.command.Command;
 import by.epam.buber.model.RideOrder;
+import by.epam.buber.service.Impl.OrderServiceImpl;
 import by.epam.buber.service.OrderService;
 import by.epam.buber.util.ServiceException;
 
@@ -23,7 +24,7 @@ public class OrdersReceivingCommand implements Command {
         if(pageParameter != null) {
             page = Integer.parseInt(pageParameter);
         }
-        OrderService service = new OrderService();
+        OrderService service = new OrderServiceImpl();
         List<RideOrder> orders = service.getOrdersByPage(
                 (page-1)*recordsPerPage, recordsPerPage);
         int recordsQuantity = service.getRecordsQuantity();

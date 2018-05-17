@@ -9,6 +9,7 @@ import by.epam.buber.controller.validators.DriverSignUpValidator;
 import by.epam.buber.controller.validators.Validator;
 import by.epam.buber.model.Driver;
 import by.epam.buber.service.DriverService;
+import by.epam.buber.service.Impl.DriverServiceImpl;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,7 @@ public class DriverRegistrationCommand implements Command {
             logger.warn(VALIDATION_LOG);
             return new CommandResult(CAR_REGISTRATION, Action.REDIRECT);
         }
-        DriverService service = new DriverService();
+        DriverService service = new DriverServiceImpl();
         service.save(driver);
         HttpSession session = request.getSession();
         Integer adminId = (Integer) session.getAttribute("admin_id");

@@ -6,6 +6,7 @@ import by.epam.buber.controller.CommandResult;
 import by.epam.buber.controller.builders.EntityBuilder;
 import by.epam.buber.controller.builders.RideBuilder;
 import by.epam.buber.model.RideOrder;
+import by.epam.buber.service.Impl.OrderServiceImpl;
 import by.epam.buber.service.OrderService;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class RideCreationCommand implements Command {
             throws ServiceException {
         EntityBuilder entityBuilder = new RideBuilder();
         RideOrder order = (RideOrder) entityBuilder.build(request);
-        OrderService service = new OrderService();
+        OrderService service = new OrderServiceImpl();
         order = service.save(order);
         HttpSession session = request.getSession();
         session.setAttribute("order", order);

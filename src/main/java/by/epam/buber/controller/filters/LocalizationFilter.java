@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 @WebFilter(urlPatterns = { "/*" })
 public class LocalizationFilter implements Filter {
@@ -20,7 +21,8 @@ public class LocalizationFilter implements Filter {
         HttpSession session = httpRequest.getSession();
 
         if (session.getAttribute("language") == null)  {
-            String language = "en";
+            ResourceBundle resource = ResourceBundle.getBundle("configuration");
+            String language = resource.getString("init.language");
             session.setAttribute("language", language);
         }
 

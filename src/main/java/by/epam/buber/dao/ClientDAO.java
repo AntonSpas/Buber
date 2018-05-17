@@ -30,21 +30,10 @@ public class ClientDAO extends AbstractDAO {
             "UPDATE clients SET ban_scores = ban_scores + 1 WHERE id=?";
     private final static String SQL_BAN_CLIENT =
             "UPDATE clients SET enabled = 0 WHERE id=?";
-//    private final static String SQL_FIND_BY_ID = "SELECT * FROM clients WHERE id=?";
 
     public ClientDAO(Connection connection) {
         super(connection);
     }
-
-    /*@Override
-    public Client findById(int id) throws DAOException {
-        List<Client> clients = executeQuery(SQL_FIND_BY_ID, id);
-        Client client = null;
-        if(!clients.isEmpty()) {
-            client = clients.get(0);
-        }
-        return client;
-    }*/
 
     public void addBanScore(Integer id) throws DAOException {
         executeUpdate(SQL_ADD_BAN_SCORE, id);

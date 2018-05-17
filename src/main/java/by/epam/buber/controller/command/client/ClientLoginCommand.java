@@ -7,6 +7,7 @@ import by.epam.buber.controller.CommandResult;
 import by.epam.buber.model.Client;
 import by.epam.buber.model.enums.UserType;
 import by.epam.buber.service.ClientService;
+import by.epam.buber.service.Impl.ClientServiceImpl;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ public class ClientLoginCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
             throws ServiceException {
-        ClientService service = new ClientService();
+        ClientService service = new ClientServiceImpl();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         List<String> fields = Arrays.asList(email, password);

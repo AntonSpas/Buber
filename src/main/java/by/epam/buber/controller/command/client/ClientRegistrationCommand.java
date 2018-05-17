@@ -9,6 +9,7 @@ import by.epam.buber.controller.validators.SignUpValidator;
 import by.epam.buber.controller.validators.Validator;
 import by.epam.buber.model.Client;
 import by.epam.buber.service.ClientService;
+import by.epam.buber.service.Impl.ClientServiceImpl;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,7 @@ public class ClientRegistrationCommand implements Command {
             return new CommandResult(SIGN_UP, Action.REDIRECT);
         }
 
-        ClientService service = new ClientService();
+        ClientService service = new ClientServiceImpl();
         client = service.save(client);
         HttpSession session = request.getSession();
         session.setAttribute("client_id", client.getId());

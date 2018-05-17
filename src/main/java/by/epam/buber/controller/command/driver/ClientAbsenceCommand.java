@@ -4,6 +4,7 @@ import by.epam.buber.controller.Action;
 import by.epam.buber.controller.CommandResult;
 import by.epam.buber.controller.command.Command;
 import by.epam.buber.model.RideOrder;
+import by.epam.buber.service.Impl.OrderServiceImpl;
 import by.epam.buber.service.OrderService;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
@@ -26,9 +27,9 @@ public class ClientAbsenceCommand implements Command {
         RideOrder order = (RideOrder) session.getAttribute("order");
         Integer orderId = order.getId();
         Integer clientId = order.getClientId();
-        OrderService service = new OrderService();
+        OrderService service = new OrderServiceImpl();
         service.registerAbsence(orderId, clientId);
-        logger.info(String.format(ABSENCE_LOG, order.getDriverId(), clientId));
+        logger.info(String.format(ABSENCE_LOG, order.getDriverId(), clientId, orderId));
         return new CommandResult(AVAILABLE_ORDERS, Action.REDIRECT);
     }
 }

@@ -26,6 +26,13 @@
             </div>
         </div>
     </div>
+    <c:if test="${negative_account}">
+        <div class="error">
+            <div class="container">
+                <fmt:message key="negative_account"/>
+            </div>
+        </div>
+    </c:if>
 </div>
 
 <%@ include file="../fragment/simple_footer.jspf" %>

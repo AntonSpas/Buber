@@ -11,7 +11,8 @@
             <h4><fmt:message key="sign_in"/></h4>
             <label for="login"><fmt:message key="login"/></label>
             <input type="text" class="form-control" id="login" name="login"
-                   required placeholder=<fmt:message key="login"/>>
+                   pattern="(?=.*[a-z])(?=.*\d)[0-9a-zA-Z]{4,16}"
+                   placeholder=<fmt:message key="login"/> required>
             <div class="invalid-feedback">
                 <fmt:message key="invalid_login"/>
             </div>
@@ -19,7 +20,8 @@
         <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
             <label for="password"><fmt:message key="password"/></label>
             <input type="password" class="form-control" id="password" name="password"
-                   required placeholder=<fmt:message key="password"/>>
+                   pattern="(?=.*[a-z])(?=.*\d)[0-9a-zA-Z]{6,16}"
+                   placeholder=<fmt:message key="password"/> required>
             <div class="invalid-feedback">
                 <fmt:message key="invalid_password"/>
             </div>

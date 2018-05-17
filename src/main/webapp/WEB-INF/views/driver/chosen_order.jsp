@@ -5,7 +5,7 @@
 <c:url var="confirm" value="/driver/confirm"/>
 <c:url var="absence" value="/driver/absence"/>
 
-<fmt:message key="ride" var="ride" />
+<fmt:message key="ride_order" var="ride" />
 <fmt:message key="departure" var="departure" />
 <fmt:message key="destination" var="destination" />
 

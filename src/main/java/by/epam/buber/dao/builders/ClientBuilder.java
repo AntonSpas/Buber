@@ -2,6 +2,7 @@ package by.epam.buber.dao.builders;
 
 import by.epam.buber.model.Client;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -23,6 +24,7 @@ public class ClientBuilder implements EntityBuilder {
         } else {
             enabled = false;
         }
+        BigDecimal account = resultSet.getBigDecimal(9);
 
         Client client = new Client();
 
@@ -34,6 +36,7 @@ public class ClientBuilder implements EntityBuilder {
         client.setPhone(phone);
         client.setBanScores(banScores);
         client.setEnabled(enabled);
+        client.setAccount(account);
 
         return client;
     }

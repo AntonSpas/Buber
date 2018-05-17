@@ -7,6 +7,7 @@ import by.epam.buber.controller.CommandResult;
 import by.epam.buber.model.Driver;
 import by.epam.buber.model.enums.UserType;
 import by.epam.buber.service.DriverService;
+import by.epam.buber.service.Impl.DriverServiceImpl;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ public class DriverLoginCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
             throws ServiceException {
-        DriverService service = new DriverService();
+        DriverService service = new DriverServiceImpl();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 

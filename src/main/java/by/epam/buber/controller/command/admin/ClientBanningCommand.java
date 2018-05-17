@@ -4,6 +4,7 @@ import by.epam.buber.controller.Action;
 import by.epam.buber.controller.CommandResult;
 import by.epam.buber.controller.command.Command;
 import by.epam.buber.service.ClientService;
+import by.epam.buber.service.Impl.ClientServiceImpl;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ public class ClientBanningCommand implements Command {
             throws ServiceException {
         String stringClientId = request.getParameter("client_id");
         Integer clientId = Integer.parseInt(stringClientId);
-        ClientService service = new ClientService();
+        ClientService service = new ClientServiceImpl();
         service.banClient(clientId);
         HttpSession session = request.getSession();
         Integer adminId = (Integer) session.getAttribute("admin_id");

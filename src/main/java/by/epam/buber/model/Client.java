@@ -1,5 +1,7 @@
 package by.epam.buber.model;
 
+import java.math.BigDecimal;
+
 public class Client extends Entity {
     private String name;
     private String surname;
@@ -8,6 +10,7 @@ public class Client extends Entity {
     private String phone;
     private Integer banScores;
     private Boolean enabled;
+    private BigDecimal account;
 
     public String getName() {
         return name;
@@ -63,6 +66,14 @@ public class Client extends Entity {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public BigDecimal getAccount() {
+        return account;
+    }
+
+    public void setAccount(BigDecimal account) {
+        this.account = account;
     }
 
     @Override

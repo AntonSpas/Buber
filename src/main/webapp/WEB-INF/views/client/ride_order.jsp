@@ -1,5 +1,5 @@
 <%@ include file="../fragment/head.jspf" %>
-<fmt:message key="get_ride" var="title" />
+<fmt:message key="ride_order" var="title" />
 <%@ include file="../fragment/header.jspf" %>
 
 <c:url var="home" value="/"/>
@@ -8,7 +8,7 @@
 <div id="smf">
     <form action = "${ride_order}" method = "POST">
         <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
-            <h4><fmt:message key="ride"/></h4>
+            <h4><fmt:message key="ride_order"/></h4>
             <label for="type"><fmt:message key="car_type"/></label>
             <select class="form-control" id="type" name="car_type" required>
                 <option selected disabled><fmt:message key="choose_car_type"/></option>

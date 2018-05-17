@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS `admins`;
+CREATE TABLE `admins` (
   `id` tinyint(3) NOT NULL AUTO_INCREMENT,
   `login` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,

@@ -1,0 +1,87 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<c:set var="isValid" value="${not empty isValid ? isValid : true}" />
+<!DOCTYPE html>
+<html lang="${language}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>${title}</title>
+    <link rel="shortcut icon" href="/resources/favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/resources/css/main.css">
+    <link rel="stylesheet" href="/resources/css/font-awesome.min.css">
+</head>
+<body>
+
+<c:url var="home" value="/"/>
+<c:url var="login" value="/login"/>
+<c:url var="logout" value="/logout"/>
+<c:url var="sign_up" value="/sign-up"/>
+<c:url var="client_home" value="/client/client-home"/>
+<c:url var="driver_home" value="/driver/available-orders"/>
+<c:url var="administration" value="/admin/administration"/>
+
+<c:choose>
+<c:when test="${home_page}"><nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light"></c:when>
+<c:otherwise><nav class="navbar fixed-top navbar-expand-lg navbar-dark"></c:otherwise>
+</c:choose>
+<%--
+<nav <c:choose>
+    <c:when test="${home == true}">class="navbar fixed-top navbar-expand-lg navbar-light bg-light"</c:when>
+    <c:otherwise>class="navbar fixed-top navbar-expand-lg navbar-dark"</c:otherwise>
+</c:choose>
+>--%>
+    <a class="navbar-brand" href="${home}">BUBER</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#buberNavbar"
+            aria-controls="buberNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="buberNavbar">
+        <form class="form-inline ml-auto">
+            <select class="form-control" id="language" name="language" onchange="submit()">
+                <option value="en" ${language == 'en' ? 'selected' : ''}>En</option>
+                <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ру</option>
+                <option value="by" ${language == 'by' ? 'selected' : ''}>Бел</option>
+            </select>
+        </form>
+        <c:if test="${!simple}">
+            <ul class="navbar-nav">
+                <c:choose>
+                    <c:when test="${userType == 'CLIENT'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="${client_home}">${client_name}</a>
+                        </li>
+                    </c:when>
+                    <c:when test="${userType == 'DRIVER'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="${driver_home}">${driver_name}</a>
+                        </li>
+                    </c:when>
+                    <c:when test="${userType == 'ADMIN'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="${administration}">
+                                <fmt:message key="administrator"/></a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${login}"><fmt:message key="sign-in"/></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${sign_up}"><fmt:message key="sign-up"/></a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+                <c:if test="${not empty userType}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${logout}"><fmt:message key="logout"/></a>
+                    </li>
+                </c:if>
+            </ul>
+        </c:if>
+    </div>
+</nav>

@@ -22,8 +22,7 @@ public class ConnectionWrapper implements AutoCloseable {
         try {
             connection.rollback();
         } catch (SQLException exception) {
-            logger.error("SQLException while rollback call", exception);
-            throw new IllegalStateException("SQLException while rollback call", exception);
+            logger.warn("SQLException while rollback call", exception);
         }
     }
 

@@ -6,6 +6,7 @@
 <c:url var="orders" value="/admin/orders"/>
 <c:url var="clients" value="/admin/clients"/>
 
+<main class="flex-fill">
 <div id="t">
     <div class="container centered">
         <div class="row">
@@ -35,5 +36,6 @@
         </div>
     </div>
 </div>
+</main>
 
-<%@ include file="../fragment/simple_footer.jspf" %>
+<%@ include file="../fragment/footer.jspf" %>

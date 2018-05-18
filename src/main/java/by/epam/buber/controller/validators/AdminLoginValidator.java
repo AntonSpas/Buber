@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 public class AdminLoginValidator extends AbstractValidator{
 
-    private static final String LOGIN_PATTERN = "^(?=.*[a-z])(?=.*\\d)\\S{4,16}$";
+    private static final String LOGIN_PATTERN = "^(?=.*[a-z])\\S{4,16}$";
     private static final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*\\d)\\S{6,16}$";
 
     @Override

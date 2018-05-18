@@ -6,6 +6,7 @@
 <c:url var="client_login" value="/client-login"/>
 <fmt:message key="email" var="email" />
 
+<main class="flex-fill">
 <div class="page-wrap">
     <div id="smf">
         <form action = "${client_login}" method = "POST" class="needs-validation" novalidate>
@@ -41,5 +42,6 @@
         </c:if>
     </div>
 </div>
+</main>
 
-<%@ include file="fragment/simple_footer.jspf" %>
+<%@ include file="fragment/footer.jspf" %>

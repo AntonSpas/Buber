@@ -5,6 +5,7 @@
 <c:url var="home" value="/"/>
 <c:url var="ride_order" value="/client/ride-order"/>
 
+<main class="flex-fill">
 <div id="smf">
     <form action = "${ride_order}" method = "POST">
         <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
@@ -40,5 +41,6 @@
         </div>
     </form>
 </div>
+</main>
 
-<%@ include file="../fragment/simple_footer.jspf" %>
+<%@ include file="../fragment/footer.jspf" %>

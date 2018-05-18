@@ -3,6 +3,7 @@
 <c:set var="home_page" value="${true}" />
 <%@ include file="fragment/header.jspf" %>
 
+<main class="flex-fill">
 <div id="headerwrap">
     <div class="container">
         <div class="row centered">
@@ -65,5 +66,6 @@
         </div>
     </div>
 </div>
+</main>
 
-<%@ include file="fragment/home_footer.jspf" %>
+<%@ include file="fragment/footer.jspf" %>

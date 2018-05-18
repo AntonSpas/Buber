@@ -5,6 +5,7 @@
 <c:url var="ride_order" value="/client/ride-order"/>
 <c:url var="replenish_account" value="/client/replenish-account"/>
 
+<main class="flex-fill">
 <div id="t">
     <div class="container centered">
         <div class="row">
@@ -34,5 +35,6 @@
         </div>
     </c:if>
 </div>
+</main>
 
-<%@ include file="../fragment/simple_footer.jspf" %>
+<%@ include file="../fragment/footer.jspf" %>

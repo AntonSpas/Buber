@@ -1,13 +1,15 @@
 <%@ include file="../fragment/head.jspf" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <fmt:message key="clients" var="title" />
 <%@ include file="../fragment/header.jspf" %>
 
 <c:url var="ban" value="/admin/ban-client"/>
 
+<main class="flex-fill">
 <div id="h">
     <div class="container">
         <div class="centered">
-            <h3>Clients</h3>
+            <h3><fmt:message key="clients"/></h3>
         </div>
         <div class="table-responsive">
             <table class="table table-sm table-hover">
@@ -44,7 +46,11 @@
                 </tbody>
             </table>
         </div>
+
+        <t:pagination currentPage="${currentPage}" orders_page="${orders_page}"
+                      pagesQuantity="${pagesQuantity}"/>
     </div>
 </div>
+</main>
 
-<%@ include file="../fragment/simple_footer.jspf" %>
+<%@ include file="../fragment/footer.jspf" %>

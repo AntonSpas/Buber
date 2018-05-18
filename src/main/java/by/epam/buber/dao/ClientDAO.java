@@ -8,6 +8,9 @@ import by.epam.buber.util.DAOException;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +33,23 @@ public class ClientDAO extends AbstractDAO {
             "UPDATE clients SET ban_scores = ban_scores + 1 WHERE id=?";
     private final static String SQL_BAN_CLIENT =
             "UPDATE clients SET enabled = 0 WHERE id=?";
+    private final static String SQL_FIND_BY_PAGE =
+            "SELECT * FROM clients ORDER BY id LIMIT ? OFFSET ?";
+    private final static String SQL_MAX_ID = "SELECT MAX(id) FROM clients";
+
+    public List<Client> findByPage(int firstRow, int rowCount) throws DAOException {
+        return executeQuery(SQL_FIND_BY_PAGE, rowCount, firstRow);
+    }
+
+    public Integer findMaxId() throws DAOException {
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SQL_MAX_ID)) {
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException exception) {
+            throw new DAOException(exception.getMessage(), exception);
+        }
+    }
 
     public ClientDAO(Connection connection) {
         super(connection);

@@ -1,3 +1,6 @@
+CREATE DATABASE  IF NOT EXISTS `buber`;
+USE `buber`;
+
 DROP TABLE IF EXISTS `admins`;
 CREATE TABLE `admins` (
   `id` tinyint(3) NOT NULL AUTO_INCREMENT,

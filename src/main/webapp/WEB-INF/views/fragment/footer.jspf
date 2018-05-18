@@ -1,0 +1,52 @@
+<c:url var="admin_login" value="/admin-login"/>
+
+<footer>
+    <div class="footer">
+        <c:if test="${home_page}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 centered">
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-vk"></i></a>
+                        <a href="#"><i class="fa fa-youtube"></i></a>
+                    </div>
+                    <div class="col-md-4 offset-md-2">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><fmt:message key="contacts"/></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><fmt:message key="careers"/></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${admin_login}"><fmt:message key="administration"/></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+        <div class="container grey">
+            <div class="row">
+                <div class="col-12">
+                    <span>2018 Buber Technologies Inc.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</wrapper>
+
+<%--<script src="/resources/js/validation.js"></script>--%>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+</body>
+</html>

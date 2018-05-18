@@ -7,6 +7,7 @@
 <fmt:message key="departure" var="departure" />
 <fmt:message key="destination" var="destination" />
 
+<main class="flex-fill">
 <div class="container ot">
     <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
         <div class="centered">
@@ -56,5 +57,6 @@
         </table>
     </div>
 </div>
+</main>
 
-<%@ include file="../fragment/simple_footer.jspf" %>
+<%@ include file="../fragment/footer.jspf" %>

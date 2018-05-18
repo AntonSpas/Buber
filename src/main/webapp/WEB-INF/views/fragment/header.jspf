@@ -24,6 +24,7 @@
 <c:url var="driver_home" value="/driver/available-orders"/>
 <c:url var="administration" value="/admin/administration"/>
 
+<wrapper class="d-flex flex-column">
 <c:choose>
 <c:when test="${home_page}"><nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light"></c:when>
 <c:otherwise><nav class="navbar fixed-top navbar-expand-lg navbar-dark"></c:otherwise>

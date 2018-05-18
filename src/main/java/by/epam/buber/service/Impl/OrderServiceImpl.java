@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -75,17 +76,19 @@ public class OrderServiceImpl implements OrderService {
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
             OrderDAO dao = new OrderDAO(connection);
-            return dao.findStreetById(id);
+            Optional<String> street = Optional.ofNullable(dao.findStreetById(id));
+            return street.orElseThrow(() ->
+                    new ServiceException("Street " + id + " not found"));
         } catch (DAOException exception) {
             throw new ServiceException(exception.getMessage(), exception);
         }
     }
 
     public void registerAbsence(Integer id, Integer clientId) throws ServiceException{
-        Connection connection = null;
-        try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
-                connectionPool.takeConnection())) {
-            connection = connectionWrapper.getConnection();
+        ConnectionWrapper connectionWrapper = null;
+        try {
+            connectionWrapper = new ConnectionWrapper(connectionPool.takeConnection());
+            Connection connection = connectionWrapper.getConnection();
 
             connection.setAutoCommit(false);
 
@@ -97,12 +100,10 @@ public class OrderServiceImpl implements OrderService {
             connection.commit();
 
         } catch (DAOException | SQLException exception) {
-            try {
-                connection.rollback();
-            } catch (SQLException sqlException) {
-                // log.warn
-            }
             throw new ServiceException(exception.getMessage(), exception);
+        } finally {
+            connectionWrapper.close();
+            connectionWrapper.rollback();
         }
     }
 
@@ -112,10 +113,12 @@ public class OrderServiceImpl implements OrderService {
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
 
-            OrderDAO orderDAO = new OrderDAO(connection);
-            Double distance = orderDAO.findDistance2(startStreet, destinationStreet);
-            return distance;
-
+            OrderDAO dao = new OrderDAO(connection);
+            Optional<Double> distance = Optional.ofNullable(
+                    dao.findDistance2(startStreet, destinationStreet));
+            return distance.orElseThrow(() ->
+                    new ServiceException("Distance between " + startStreet + "and" +
+                            destinationStreet + " not found"));
         } catch (DAOException exception) {
             throw new ServiceException(exception.getMessage(), exception);
         }
@@ -131,11 +134,14 @@ public class OrderServiceImpl implements OrderService {
             orderDAO.addDriver(orderId, driverId);
 
             DAO<RideOrder> dao = new OrderDAO(connection);
-            RideOrder order = dao.findById(orderId);
-
+            Optional<RideOrder> orderOptional = Optional.ofNullable(dao.findById(orderId));
+            RideOrder order = orderOptional.orElseThrow(() ->
+                    new ServiceException("Order " + orderId + " not found"));
             Integer clientId = order.getClientId();
             DAO<Client> clientDAO = new ClientDAO(connection);
-            Client client = clientDAO.findById(clientId);
+            Optional<Client> clientOptional = Optional.ofNullable(clientDAO.findById(clientId));
+            Client client = clientOptional.orElseThrow(() ->
+                    new ServiceException("Client " + clientId + " not found"));
 
             return Arrays.asList(order, client);
 

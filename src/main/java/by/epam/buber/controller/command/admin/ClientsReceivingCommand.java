@@ -18,9 +18,20 @@ public class ClientsReceivingCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
             throws ServiceException {
+        int page = 1;
+        int recordsPerPage = 10;
+        String pageParameter = request.getParameter("page");
+        if(pageParameter != null) {
+            page = Integer.parseInt(pageParameter);
+        }
         ClientService service = new ClientServiceImpl();
-        List<Client> clients = service.getAll();
+        List<Client> clients = service.getClientsByPage(
+                (page-1)*recordsPerPage, recordsPerPage);
+        int recordsQuantity = service.getRecordsQuantity();
+        int pagesQuantity = (int) Math.ceil(recordsQuantity * 1.0 / recordsPerPage);
         request.setAttribute("clients", clients);
+        request.setAttribute("pagesQuantity", pagesQuantity);
+        request.setAttribute("currentPage", page);
         return new CommandResult(CLIENTS, Action.FORWARD);
     }
 }

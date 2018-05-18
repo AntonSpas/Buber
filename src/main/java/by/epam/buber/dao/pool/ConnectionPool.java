@@ -54,7 +54,7 @@ public class ConnectionPool {
             properties.put("serverTimezone", serverTimezone);
             Class.forName(driver);
 
-            String poolSizeProperty = resource.getString("poolsize");
+            String poolSizeProperty = resource.getString("poolSize");
             poolSize = Integer.parseInt(poolSizeProperty);
 
             semaphore = new Semaphore(poolSize, true);

@@ -4,6 +4,7 @@
 
 <c:url var="replenish_account" value="/client/replenish-account"/>
 
+<main class="flex-fill">
 <div id="smf">
     <form action = "${replenish_account}" method = "POST" class="needs-validation" novalidate>
         <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
@@ -28,5 +29,6 @@
         </div>
     </c:if>
 </div>
+</main>
 
-<%@ include file="../fragment/simple_footer.jspf" %>
+<%@ include file="../fragment/footer.jspf" %>

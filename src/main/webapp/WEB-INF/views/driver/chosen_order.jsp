@@ -9,6 +9,7 @@
 <fmt:message key="departure" var="departure" />
 <fmt:message key="destination" var="destination" />
 
+<main class="flex-fill">
 <div class="container wb">
     <div class="container">
         <h4><fmt:message key="order_details" /></h4><br>
@@ -25,5 +26,6 @@
         <a href="${absence}" class="btn btn-reject"><fmt:message key="client_absence_btn" /></a>
     </div>
 </div>
+</main>
 
-<%@ include file="../fragment/simple_footer.jspf" %>
+<%@ include file="../fragment/footer.jspf" %>

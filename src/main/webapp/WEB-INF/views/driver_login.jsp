@@ -6,8 +6,9 @@
 <c:url var="driver_login" value="/driver-login"/>
 <fmt:message key="email" var="email" />
 
+<main class="flex-fill">
 <div id="smf">
-    <form action = "${driver_login}" method = "POST">
+    <form action = "${driver_login}" method = "POST" class="needs-validation" novalidate>
         <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
             <h4>${email}</h4>
             <label for="email"><fmt:message key="email"/></label>
@@ -39,5 +40,6 @@
         </div>
     </c:if>
 </div>
+</main>
 
-<%@ include file="fragment/simple_footer.jspf" %>
+<%@ include file="fragment/footer.jspf" %>

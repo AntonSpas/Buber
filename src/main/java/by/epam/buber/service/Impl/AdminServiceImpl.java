@@ -10,6 +10,7 @@ import by.epam.buber.util.ServiceException;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.Connection;
+import java.util.Optional;
 
 public class AdminServiceImpl implements AdminService {
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -19,14 +20,17 @@ public class AdminServiceImpl implements AdminService {
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
             AdminDAO dao = new AdminDAO(connection);
-            Admin admin = dao.getByLogin(login);
+            Optional<Admin> adminOptional = Optional.ofNullable(dao.getByLogin(login));
+            Admin admin = adminOptional.orElseThrow(() ->
+                    new ServiceException("Admin " + login + " not found"));
             password = DigestUtils.sha1Hex(password);
             if(password.equals(admin.getPassword())) {
                 return admin;
+            } else {
+                throw new ServiceException("Wrong password for " + login + " admin");
             }
         } catch (DAOException exception) {
             throw new ServiceException(exception.getMessage(), exception);
         }
-        return null;
     }
 }

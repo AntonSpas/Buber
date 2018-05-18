@@ -13,6 +13,7 @@
 <fmt:message key="car_model_variant" var="car_model_variant" />
 <fmt:message key="car_number_variant" var="car_number_variant" />
 
+<main class="flex-fill">
 <div id="bf">
     <form action = "${car_registration}" method = "POST" class="needs-validation" novalidate>
         <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
@@ -103,5 +104,6 @@
         </div>
     </c:if>
 </div>
+</main>
 
-<%@ include file="../fragment/unbounded_footer.jspf" %>
+<%@ include file="../fragment/footer.jspf" %>

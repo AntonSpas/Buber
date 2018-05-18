@@ -14,4 +14,7 @@ public interface ClientService {
     void banClient(Integer id) throws ServiceException;
     List<Client> getAll() throws ServiceException;
     Client findById(Integer id) throws ServiceException;
+    List<Client> getClientsByPage(int firstRow, int rowCount)
+            throws ServiceException;
+    Integer getRecordsQuantity() throws ServiceException;
 }

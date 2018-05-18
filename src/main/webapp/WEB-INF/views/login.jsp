@@ -7,6 +7,7 @@
 <c:url var="driver_login" value="/driver-login"/>
 <fmt:message key="email" var="email" />
 
+<main class="flex-fill">
 <div id="t">
     <div class="container centered">
         <div class="row">
@@ -29,5 +30,6 @@
         </div>
     </div>
 </div>
+</main>
 
-<%@ include file="fragment/simple_footer.jspf" %>
+<%@ include file="fragment/footer.jspf" %>

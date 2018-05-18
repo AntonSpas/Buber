@@ -10,6 +10,7 @@
 <fmt:message key="create_password" var="create_password" />
 <fmt:message key="phone_number" var="phone_number" />
 
+<main class="flex-fill">
 <div id="spf">
     <form action = "${sign_up}" method = "POST" class="needs-validation" novalidate>
         <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
@@ -70,6 +71,7 @@
         </div>
     </c:if>
 </div>
+</main>
 
-<%@ include file="fragment/unbounded_footer.jspf" %>
+<%@ include file="fragment/footer.jspf" %>
 

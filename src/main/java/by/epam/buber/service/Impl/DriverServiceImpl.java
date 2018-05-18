@@ -11,6 +11,7 @@ import by.epam.buber.util.ServiceException;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.Connection;
+import java.util.Optional;
 
 public class DriverServiceImpl implements DriverService {
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -20,15 +21,18 @@ public class DriverServiceImpl implements DriverService {
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
             DriverDAO dao = new DriverDAO(connection);
-            Driver driver = dao.getByEmail(email);
+            Optional<Driver> driverOptional = Optional.ofNullable(dao.getByEmail(email));
+            Driver driver = driverOptional.orElseThrow(() ->
+                    new ServiceException("Driver not found for email " + email));
             password = DigestUtils.sha1Hex(password);
             if(password.equals(driver.getPassword())) {
                 return driver;
+            } else {
+                throw new ServiceException("Wrong password for driver's email " + email);
             }
         } catch (DAOException exception) {
             throw new ServiceException(exception.getMessage(), exception);
         }
-        return null;
     }
 
     public Driver save(Driver driver) throws ServiceException{
@@ -47,7 +51,9 @@ public class DriverServiceImpl implements DriverService {
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
             DAO<Driver> dao = new DriverDAO(connection);
-            return dao.findById(id);
+            Optional<Driver> driver = Optional.ofNullable(dao.findById(id));
+            return driver.orElseThrow(() ->
+                    new ServiceException("Driver " + id + " not found"));
         } catch (DAOException exception) {
             throw new ServiceException(exception.getMessage(), exception);
         }

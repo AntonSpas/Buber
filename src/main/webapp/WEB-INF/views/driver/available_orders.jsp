@@ -5,6 +5,7 @@
 <c:url var="home" value="/"/>
 <c:url var="accept" value="/driver/chosen-order"/>
 
+<main class="flex-fill">
 <div id="h">
     <div class="container">
         <div class="centered">
@@ -35,5 +36,6 @@
         </div>
     </div>
 </div>
+</main>
 
-<%@ include file="../fragment/simple_footer.jspf" %>
+<%@ include file="../fragment/footer.jspf" %>

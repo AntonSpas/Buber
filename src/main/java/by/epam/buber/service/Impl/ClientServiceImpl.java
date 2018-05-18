@@ -13,6 +13,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 public class ClientServiceImpl implements ClientService {
 
@@ -23,15 +24,18 @@ public class ClientServiceImpl implements ClientService {
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
             ClientDAO dao = new ClientDAO(connection);
-            Client client = dao.getByEmail(email);
+            Optional<Client> clientOptional = Optional.ofNullable(dao.getByEmail(email));
+            Client client = clientOptional.orElseThrow(() ->
+                    new ServiceException("Client not found for email " + email));
             password = DigestUtils.sha1Hex(password);
             if(password.equals(client.getPassword())) {
                 return client;
+            } else {
+                throw new ServiceException("Wrong password for client's email " + email);
             }
         } catch (DAOException exception) {
             throw new ServiceException(exception.getMessage(), exception);
         }
-        return null;
     }
 
     public Client save(Client client) throws ServiceException{
@@ -85,8 +89,32 @@ public class ClientServiceImpl implements ClientService {
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
             DAO<Client> dao = new ClientDAO(connection);
-            Client client = dao.findById(id);
-            return client;
+            Optional<Client> client = Optional.ofNullable(dao.findById(id));
+            return client.orElseThrow(() ->
+                    new ServiceException("Client " + id + " not found"));
+        } catch (DAOException exception) {
+            throw new ServiceException(exception.getMessage(), exception);
+        }
+    }
+
+    public List<Client> getClientsByPage(int firstRow, int rowCount)
+            throws ServiceException{
+        try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
+                connectionPool.takeConnection())) {
+            Connection connection = connectionWrapper.getConnection();
+            ClientDAO dao = new ClientDAO(connection);
+            return dao.findByPage(firstRow, rowCount);
+        } catch (DAOException exception) {
+            throw new ServiceException(exception.getMessage(), exception);
+        }
+    }
+
+    public Integer getRecordsQuantity() throws ServiceException{
+        try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
+                connectionPool.takeConnection())) {
+            Connection connection = connectionWrapper.getConnection();
+            ClientDAO dao = new ClientDAO(connection);
+            return dao.findMaxId();
         } catch (DAOException exception) {
             throw new ServiceException(exception.getMessage(), exception);
         }

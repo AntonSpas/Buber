@@ -5,9 +5,12 @@ import by.epam.buber.controller.validators.LoginValidator;
 import by.epam.buber.controller.command.Command;
 import by.epam.buber.controller.CommandResult;
 import by.epam.buber.model.Driver;
+import by.epam.buber.model.RideOrder;
 import by.epam.buber.model.enums.UserType;
 import by.epam.buber.service.DriverService;
 import by.epam.buber.service.Impl.DriverServiceImpl;
+import by.epam.buber.service.Impl.OrderServiceImpl;
+import by.epam.buber.service.OrderService;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +24,7 @@ import java.util.List;
 public class DriverLoginCommand implements Command {
     private static final String DRIVER_LOGIN = "/driver-login";
     private static final String AVAILABLE_ORDERS = "/driver/available-orders";
+//    private static final String ACCEPTED_ORDERS = "/driver/accepted-orders";
     private static final String VALIDATION_LOG = "Driver login form is not valid";
     private static final String LOGGED_IN_LOG = "Driver %d successfully logged in";
 
@@ -46,6 +50,19 @@ public class DriverLoginCommand implements Command {
         session.setAttribute("driver_name", driver.getName());
         session.setAttribute("userType", UserType.DRIVER);
         logger.info(String.format(LOGGED_IN_LOG, driver.getId()));
+
+        OrderService orderService = new OrderServiceImpl();
+        List<RideOrder> orders = orderService.getUnconfirmedOrders(driver.getId());
+
+        System.out.println(orders);
+
+        if (!orders.isEmpty()) {
+            System.out.println("unconfirmed present !!!");
+            session.setAttribute("unconfirmed_present", true);
+            session.setAttribute("unconfirmed_orders", orders);
+//            return new CommandResult(ACCEPTED_ORDERS, Action.REDIRECT);
+        }
+
         return new CommandResult(AVAILABLE_ORDERS, Action.REDIRECT);
     }
 }

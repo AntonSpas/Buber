@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface OrderService {
     RideOrder save(RideOrder rideOrder) throws ServiceException;
+    RideOrder findById(Integer id) throws ServiceException;
     List<RideOrder> getOrdersByPage(int firstRow, int rowCount)
             throws ServiceException;
     Integer getRecordsQuantity() throws ServiceException;
@@ -17,6 +18,8 @@ public interface OrderService {
     void registerAbsence(Integer id, Integer clientId) throws ServiceException;
     Double getDistance(String startStreet, String destinationStreet)
             throws ServiceException;
+    RideOrder getActiveOrder(Integer cloentId) throws ServiceException;
+    List<RideOrder> getUnconfirmedOrders(Integer driverId) throws ServiceException;
     List<Entity> acceptOrder(Integer orderId, Integer driverId)
             throws ServiceException;
     void executeTransfer(RideOrder order) throws ServiceException;

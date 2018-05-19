@@ -4,12 +4,13 @@
 
 <c:url var="home" value="/"/>
 <c:url var="accept" value="/driver/chosen-order"/>
+<c:url var="unconfirmed" value="/driver/accepted-orders"/>
 
 <main class="flex-fill">
 <div id="h">
     <div class="container">
         <div class="centered">
-            <h3>Orders</h3>
+            <h3><fmt:message key="orders"/></h3>
         </div>
         <div class="table-responsive">
             <table class="table table-sm table-hover">
@@ -34,6 +35,9 @@
                 </tbody>
             </table>
         </div>
+        <c:if test="${unconfirmed_present}">
+            <a href="${unconfirmed}" class="btn btn-reject"><fmt:message key="unconfirmed_orders_btn" /></a>
+        </c:if>
     </div>
 </div>
 </main>

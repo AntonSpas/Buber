@@ -36,6 +36,10 @@ public class OrderDAO extends AbstractDAO {
     private final static String SQL_FIND_BY_PAGE =
             "SELECT * FROM orders ORDER BY id LIMIT ? OFFSET ?";
     private final static String SQL_MAX_ID = "SELECT MAX(id) FROM orders";
+    private final static String SQL_FIND_ACTIVE =
+            "SELECT * FROM orders WHERE client_id=? AND (status='RECEIVED' OR status='ACCEPTED')";
+    private final static String SQL_FIND_ACCEPTED =
+            "SELECT * FROM orders WHERE status='ACCEPTED' AND driver_id=?";
 
     public List<RideOrder> findByPage(int firstRow, int rowCount) throws DAOException {
         return executeQuery(SQL_FIND_BY_PAGE, rowCount, firstRow);
@@ -84,6 +88,18 @@ public class OrderDAO extends AbstractDAO {
     public void addDriver(Integer orderId, Integer driverId) throws DAOException {
         executeUpdate(SQL_ADD_DRIVER, driverId,
                 OrderStatus.ACCEPTED.toString(), orderId);
+    }
+
+    public RideOrder findActiveOrder(Integer clientId) throws DAOException {
+        List<RideOrder> orders = executeQuery(SQL_FIND_ACTIVE, clientId);
+        if (orders.isEmpty()) {
+            return null;
+        }
+        return orders.get(0);
+    }
+
+    public List<RideOrder> findUnconfirmedOrders(Integer driverId) throws DAOException {
+        return executeQuery(SQL_FIND_ACCEPTED, driverId);
     }
 
     public OrderDAO(Connection connection) {

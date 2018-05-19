@@ -1,6 +1,7 @@
 package by.epam.buber.dao.builders;
 
 import by.epam.buber.model.RideOrder;
+import by.epam.buber.model.enums.CarType;
 import by.epam.buber.model.enums.OrderStatus;
 
 import java.math.BigDecimal;
@@ -18,7 +19,7 @@ public class OrderBuilder implements EntityBuilder {
         String destinationStreet = resultSet.getString(4);
         BigDecimal cost = resultSet.getBigDecimal(5);
         String stringRideStatus = resultSet.getString(6);
-
+        String stringCarType = resultSet.getString(7);
         Integer driverId = resultSet.getInt(8);
 
         RideOrder order = new RideOrder();
@@ -30,6 +31,8 @@ public class OrderBuilder implements EntityBuilder {
         order.setCost(cost);
         OrderStatus orderStatus = OrderStatus.valueOf(stringRideStatus);
         order.setOrderStatus(orderStatus);
+        CarType carType = CarType.valueOf(stringCarType);
+        order.setCarType(carType);
         if (driverId != 0) {
             order.setDriverId(driverId);
         }

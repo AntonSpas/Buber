@@ -23,6 +23,8 @@ public class ViewProviderCommand implements Command{
     private static final String RIDE_ORDER = "/WEB-INF/views/client/ride_order.jsp";
     private static final String ACCOUNT_REPLENISHMENT =
             "/WEB-INF/views/client/account_replenishment.jsp";
+    private static final String ACCEPTED_ORDERS =
+            "/WEB-INF/views/driver/accepted_orders.jsp";
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
@@ -45,6 +47,8 @@ public class ViewProviderCommand implements Command{
                 return CLIENT_LOGIN;
             case "/driver-login":
                 return DRIVER_LOGIN;
+            case "/driver/accepted-orders":
+                return ACCEPTED_ORDERS;
             case "/admin/administration":
                 return ADMIN_HOME;
             case "/admin/clients":

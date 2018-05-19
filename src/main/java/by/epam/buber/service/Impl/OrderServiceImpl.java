@@ -37,6 +37,19 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    public RideOrder findById(Integer id) throws ServiceException{
+        try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
+                connectionPool.takeConnection())) {
+            Connection connection = connectionWrapper.getConnection();
+            DAO<RideOrder> dao = new OrderDAO(connection);
+            Optional<RideOrder> order = Optional.ofNullable(dao.findById(id));
+            return order.orElseThrow(() ->
+                    new ServiceException("Order " + id + " not found"));
+        } catch (DAOException exception) {
+            throw new ServiceException(exception.getMessage(), exception);
+        }
+    }
+
     public List<RideOrder> getOrdersByPage(int firstRow, int rowCount)
             throws ServiceException{
         try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
@@ -119,6 +132,28 @@ public class OrderServiceImpl implements OrderService {
             return distance.orElseThrow(() ->
                     new ServiceException("Distance between " + startStreet + "and" +
                             destinationStreet + " not found"));
+        } catch (DAOException exception) {
+            throw new ServiceException(exception.getMessage(), exception);
+        }
+    }
+
+    public RideOrder getActiveOrder(Integer clientId) throws ServiceException{
+        try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
+                connectionPool.takeConnection())) {
+            Connection connection = connectionWrapper.getConnection();
+            OrderDAO dao = new OrderDAO(connection);
+            return dao.findActiveOrder(clientId);
+        } catch (DAOException exception) {
+            throw new ServiceException(exception.getMessage(), exception);
+        }
+    }
+
+    public List<RideOrder> getUnconfirmedOrders(Integer driverId) throws ServiceException{
+        try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
+                connectionPool.takeConnection())) {
+            Connection connection = connectionWrapper.getConnection();
+            OrderDAO dao = new OrderDAO(connection);
+            return dao.findUnconfirmedOrders(driverId);
         } catch (DAOException exception) {
             throw new ServiceException(exception.getMessage(), exception);
         }

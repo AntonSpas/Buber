@@ -5,9 +5,15 @@ import by.epam.buber.controller.validators.LoginValidator;
 import by.epam.buber.controller.command.Command;
 import by.epam.buber.controller.CommandResult;
 import by.epam.buber.model.Client;
+import by.epam.buber.model.Driver;
+import by.epam.buber.model.RideOrder;
 import by.epam.buber.model.enums.UserType;
 import by.epam.buber.service.ClientService;
+import by.epam.buber.service.DriverService;
 import by.epam.buber.service.Impl.ClientServiceImpl;
+import by.epam.buber.service.Impl.DriverServiceImpl;
+import by.epam.buber.service.Impl.OrderServiceImpl;
+import by.epam.buber.service.OrderService;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +27,7 @@ import java.util.List;
 public class ClientLoginCommand implements Command {
     private static final String CLIENT_LOGIN = "/client-login";
     private static final String CLIENT_HOME = "/client/client-home";
+    private static final String RIDE = "/client/ride";
     private static final String ERROR = "/WEB-INF/views/error.jsp";
     private static final String ERROR_MESSAGE = "banned_error";
     private static final String VALIDATION_LOG = "Client login form is not valid";
@@ -52,6 +59,21 @@ public class ClientLoginCommand implements Command {
         session.setAttribute("client_name", client.getName());
         session.setAttribute("userType", UserType.CLIENT);
         logger.info(String.format(LOGGED_IN_LOG, client.getId()));
+
+        OrderService orderService = new OrderServiceImpl();
+        RideOrder order = orderService.getActiveOrder(client.getId());
+        if(order != null) {
+            session.setAttribute("order", order);
+            DriverService driverService = new DriverServiceImpl();
+            Driver driver = null;
+            Integer driverId = order.getDriverId();
+            if (driverId != null) {
+                driver = driverService.findById(driverId);
+            }
+            request.setAttribute("driver", driver);
+            return new CommandResult(RIDE, Action.REDIRECT);
+        }
+
         return new CommandResult(CLIENT_HOME, Action.REDIRECT);
     }
 }

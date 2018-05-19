@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public class ClientAbsenceCommand implements Command {
     private static final String AVAILABLE_ORDERS = "/driver/available-orders";
@@ -25,10 +26,23 @@ public class ClientAbsenceCommand implements Command {
             throws ServiceException {
         HttpSession session = request.getSession();
         RideOrder order = (RideOrder) session.getAttribute("order");
+        OrderService service = new OrderServiceImpl();
+        if (order == null) {
+            String stringOrderId = request.getParameter("id");
+            Integer orderId = Integer.parseInt(stringOrderId);
+            order = service.findById(orderId);
+        }
         Integer orderId = order.getId();
         Integer clientId = order.getClientId();
-        OrderService service = new OrderServiceImpl();
         service.registerAbsence(orderId, clientId);
+        if (orderId != null) {
+            List<RideOrder> orders = service.getUnconfirmedOrders(order.getDriverId());
+            if (!orders.isEmpty()) {
+                session.setAttribute("unconfirmed_orders", orders);
+            } else {
+                session.setAttribute("unconfirmed_present", false);
+            }
+        }
         logger.info(String.format(ABSENCE_LOG, order.getDriverId(), clientId, orderId));
         return new CommandResult(AVAILABLE_ORDERS, Action.REDIRECT);
     }

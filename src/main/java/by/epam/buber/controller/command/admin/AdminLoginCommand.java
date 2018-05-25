@@ -22,6 +22,8 @@ import java.util.List;
 public class AdminLoginCommand implements Command {
     private static final String ADMIN_LOGIN = "/admin-login";
     private static final String ADMIN_HOME = "/admin/administration";
+    private static final String ERROR = "/WEB-INF/views/error.jsp";
+    private static final String ADMIN_LOGIN_FAULT_MESSAGE = "admin_login_fault_error";
     private static final String VALIDATION_LOG = "Admin login form is not valid";
     private static final String LOGGED_IN_LOG = "Admin %d successfully logged in";
 
@@ -40,7 +42,14 @@ public class AdminLoginCommand implements Command {
             logger.warn(VALIDATION_LOG);
             return new CommandResult(ADMIN_LOGIN, Action.REDIRECT);
         }
-        Admin admin = service.login(login, password);
+        Admin admin;
+        try {
+            admin = service.login(login, password);
+        } catch (ServiceException exception) {
+            logger.warn(exception.getMessage(), exception);
+            request.setAttribute("error", ADMIN_LOGIN_FAULT_MESSAGE);
+            return new CommandResult(ERROR, Action.FORWARD);
+        }
         HttpSession session = request.getSession();
         session.setAttribute("admin_id", admin.getId());
         session.setAttribute("userType", UserType.ADMIN);

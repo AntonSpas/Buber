@@ -12,7 +12,6 @@ import java.util.List;
 
 public class AdminDAO extends AbstractDAO {
     private final static String TABLE = "admins";
-    private final static String ENTITY_NAME = "Admin";
     private final static String SQL_FIND_BY_LOGIN =
             "SELECT * FROM admins WHERE login=?";
 
@@ -20,18 +19,20 @@ public class AdminDAO extends AbstractDAO {
         super(connection);
     }
 
-    public Admin getByLogin(String login) throws DAOException {
+
+    /**
+     * Finds admin by login
+     *
+     * @param login admin login
+     * @return founded admin or null if there is none
+     * @throws DAOException if any exceptions occurs in the dao layer
+     */
+    public Admin findByLogin(String login) throws DAOException {
         List<Admin> admins = executeQuery(SQL_FIND_BY_LOGIN, login);
-        try {
-            return admins.get(0);
-        } catch (IndexOutOfBoundsException exception) {
-            throw new DAOException("Admin not found", exception);
+        if(admins.isEmpty()) {
+            return null;
         }
-        /*Admin admin = null;
-        if(!admins.isEmpty()) {
-            admin = admins.get(0);
-        }
-        return admin;*/
+        return admins.get(0);
     }
 
     @Override
@@ -60,10 +61,5 @@ public class AdminDAO extends AbstractDAO {
         return Arrays.asList(
                 admin.getLogin(),
                 admin.getPassword());
-    }
-
-    @Override
-    protected String getEntityName() {
-        return ENTITY_NAME;
     }
 }

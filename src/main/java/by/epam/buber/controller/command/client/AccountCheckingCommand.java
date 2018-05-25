@@ -29,7 +29,7 @@ public class AccountCheckingCommand implements Command {
         HttpSession session = request.getSession();
         Integer clientId = (Integer) session.getAttribute("client_id");
         ClientService clientService = new ClientServiceImpl();
-        Client client = clientService.findById(clientId);
+        Client client = clientService.getById(clientId);
         if (client.getAccount().compareTo(new BigDecimal(0)) == -1){
             logger.info(String.format(NEGATIVE_ACCOUNT_LOG, clientId));
             request.setAttribute("negative_account", true);

@@ -13,7 +13,6 @@ import java.util.List;
 
 public class DriverDAO extends AbstractDAO {
     private final static String TABLE = "drivers";
-    private final static String ENTITY_NAME = "Driver";
     private final static String SQL_INSERT =
             "INSERT INTO drivers(name, surname, email, password, phone, car_type," +
                     " car_model, car_number) VALUES(?,?,?,SHA1(?),?,?,?,?)";
@@ -24,38 +23,35 @@ public class DriverDAO extends AbstractDAO {
             "SELECT * FROM drivers WHERE email=?";
     private final static String SQL_ADD_MONEY =
             "UPDATE drivers SET earned = earned + ? WHERE id=?";
-//    private final static String SQL_FIND_BY_ID = "SELECT * FROM drivers WHERE id=?";
 
     public DriverDAO(Connection connection) {
         super(connection);
     }
 
-    /*@Override
-    public Driver findById(int id) throws DAOException {
-        List<Driver> drivers = executeQuery(SQL_FIND_BY_ID, id);
-        Driver driver = null;
-        if(!drivers.isEmpty()) {
-            driver = drivers.get(0);
-        }
-        return driver;
-    }*/
-
-    public void putMoney(Integer id, BigDecimal cost) throws DAOException {
-        executeUpdate(SQL_ADD_MONEY, cost, id);
+    /**
+     * Puts amount of money to driver account
+     *
+     * @param id driver identifier
+     * @param amount amount of money
+     * @throws DAOException if any exceptions occurs in the dao layer
+     */
+    public void putMoney(Integer id, BigDecimal amount) throws DAOException {
+        executeUpdate(SQL_ADD_MONEY, amount, id);
     }
 
+    /**
+     * Finds driver by email
+     *
+     * @param email driver email
+     * @return founded driver or null if there is none
+     * @throws DAOException if any exceptions occurs in the dao layer
+     */
     public Driver getByEmail(String email) throws DAOException {
         List<Driver> drivers = executeQuery(SQL_FIND_BY_EMAIL, email);
-        try {
-            return drivers.get(0);
-        } catch (IndexOutOfBoundsException exception) {
-            throw new DAOException("Driver not found", exception);
+        if(drivers.isEmpty()) {
+            return null;
         }
-        /*Driver driver = null;
-        if(!drivers.isEmpty()) {
-            driver = drivers.get(0);
-        }
-        return driver;*/
+        return drivers.get(0);
     }
 
     @Override
@@ -90,10 +86,5 @@ public class DriverDAO extends AbstractDAO {
                 driver.getCarType().toString(),
                 driver.getCarModel(),
                 driver.getCarNumber());
-    }
-
-    @Override
-    protected String getEntityName() {
-        return ENTITY_NAME;
     }
 }

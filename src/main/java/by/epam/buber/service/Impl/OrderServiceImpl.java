@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public RideOrder findById(Integer id) throws ServiceException{
+    public RideOrder getById(Integer id) throws ServiceException{
         try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
@@ -128,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
 
             OrderDAO dao = new OrderDAO(connection);
             Optional<Double> distance = Optional.ofNullable(
-                    dao.findDistance2(startStreet, destinationStreet));
+                    dao.findDistance(startStreet, destinationStreet));
             return distance.orElseThrow(() ->
                     new ServiceException("Distance between " + startStreet + "and" +
                             destinationStreet + " not found"));
@@ -196,13 +196,13 @@ public class OrderServiceImpl implements OrderService {
             OrderDAO orderDAO = new OrderDAO(connection);
             Integer orderId = order.getId();
             orderDAO.changeStatus(OrderStatus.DONE, orderId);
-            BigDecimal cost = order.getCost();
+            BigDecimal amount = order.getCost();
             Integer clientId = order.getClientId();
             ClientDAO clientDAO = new ClientDAO(connection);
-            clientDAO.takeMoney(clientId, cost);
+            clientDAO.takeMoney(clientId, amount);
             Integer driverId = order.getDriverId();
             DriverDAO driverDAO = new DriverDAO(connection);
-            driverDAO.putMoney(driverId, cost);
+            driverDAO.putMoney(driverId, amount);
 
             connection.commit();
 

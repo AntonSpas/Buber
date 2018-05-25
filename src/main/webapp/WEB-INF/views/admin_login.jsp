@@ -12,7 +12,7 @@
             <h4><fmt:message key="sign_in"/></h4>
             <label for="login"><fmt:message key="login"/></label>
             <input type="text" class="form-control" id="login" name="login"
-                   pattern="(?=.*[a-z])[0-9a-zA-Z]{4,16}"
+                   pattern="(?=.*[a-z])[0-9a-zA-Z_]{4,16}"
                    placeholder=<fmt:message key="login"/> required>
             <div class="invalid-feedback">
                 <fmt:message key="invalid_login"/>

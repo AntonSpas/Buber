@@ -29,12 +29,6 @@
 <c:when test="${home_page}"><nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light"></c:when>
 <c:otherwise><nav class="navbar fixed-top navbar-expand-lg navbar-dark"></c:otherwise>
 </c:choose>
-<%--
-<nav <c:choose>
-    <c:when test="${home == true}">class="navbar fixed-top navbar-expand-lg navbar-light bg-light"</c:when>
-    <c:otherwise>class="navbar fixed-top navbar-expand-lg navbar-dark"</c:otherwise>
-</c:choose>
->--%>
     <a class="navbar-brand" href="${home}">BUBER</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#buberNavbar"
             aria-controls="buberNavbar" aria-expanded="false" aria-label="Toggle navigation">

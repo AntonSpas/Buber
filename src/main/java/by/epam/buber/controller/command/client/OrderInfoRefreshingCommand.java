@@ -26,7 +26,7 @@ public class OrderInfoRefreshingCommand implements Command {
         Driver driver = null;
         Integer driverId = order.getDriverId();
         if (driverId != null) {
-            driver = service.findById(driverId);
+            driver = service.getById(driverId);
         }
         request.setAttribute("driver", driver);
         return new CommandResult(RIDE, Action.FORWARD);

@@ -24,7 +24,7 @@ public class ClientServiceImpl implements ClientService {
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
             ClientDAO dao = new ClientDAO(connection);
-            Optional<Client> clientOptional = Optional.ofNullable(dao.getByEmail(email));
+            Optional<Client> clientOptional = Optional.ofNullable(dao.findByEmail(email));
             Client client = clientOptional.orElseThrow(() ->
                     new ServiceException("Client not found for email " + email));
             password = DigestUtils.sha1Hex(password);
@@ -72,19 +72,7 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
-    public List<Client> getAll() throws ServiceException{
-        try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
-                connectionPool.takeConnection())) {
-            Connection connection = connectionWrapper.getConnection();
-            DAO<Client> dao = new ClientDAO(connection);
-            List<Client> clients = dao.findAll();
-            return clients;
-        } catch (DAOException exception) {
-            throw new ServiceException(exception.getMessage(), exception);
-        }
-    }
-
-    public Client findById(Integer id) throws ServiceException{
+    public Client getById(Integer id) throws ServiceException{
         try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();

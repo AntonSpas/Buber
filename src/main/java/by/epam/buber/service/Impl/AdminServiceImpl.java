@@ -20,7 +20,7 @@ public class AdminServiceImpl implements AdminService {
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
             AdminDAO dao = new AdminDAO(connection);
-            Optional<Admin> adminOptional = Optional.ofNullable(dao.getByLogin(login));
+            Optional<Admin> adminOptional = Optional.ofNullable(dao.findByLogin(login));
             Admin admin = adminOptional.orElseThrow(() ->
                     new ServiceException("Admin " + login + " not found"));
             password = DigestUtils.sha1Hex(password);

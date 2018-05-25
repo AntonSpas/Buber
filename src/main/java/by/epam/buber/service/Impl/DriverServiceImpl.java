@@ -46,7 +46,7 @@ public class DriverServiceImpl implements DriverService {
         }
     }
 
-    public Driver findById (Integer id) throws ServiceException{
+    public Driver getById(Integer id) throws ServiceException{
         try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();

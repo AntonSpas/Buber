@@ -75,17 +75,4 @@ public class Client extends Entity {
     public void setAccount(BigDecimal account) {
         this.account = account;
     }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", banScores=" + banScores +
-                ", enabled=" + enabled +
-                '}';
-    }
 }

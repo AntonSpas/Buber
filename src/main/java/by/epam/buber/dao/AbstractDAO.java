@@ -30,7 +30,7 @@ public abstract class AbstractDAO<T extends Entity> implements DAO<T> {
         String query = String.format(SQL_FIND_BY_ID, getTableName());
         List<T> entities = executeQuery(query, id);
         if (entities.isEmpty()) {
-            throw new DAOException(getEntityName() + " not found");
+            return null;
         }
         return entities.get(0);
     }
@@ -109,5 +109,4 @@ public abstract class AbstractDAO<T extends Entity> implements DAO<T> {
     protected abstract String getUpdateQuery();
     protected abstract EntityBuilder getEntityBuilder();
     protected abstract List<Object> getFields(Entity entity);
-    protected abstract String getEntityName();
 }

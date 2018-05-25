@@ -29,9 +29,6 @@ public class FrontController extends HttpServlet{
             command = CommandFactory.create(request);
             commandResult = command.execute(request, response);
             String view = commandResult.getView();
-
-//            System.out.println("FrontController" + view + " " + commandResult.getAction());
-
             if (Action.REDIRECT == commandResult.getAction()) {
                 response.sendRedirect(view);
             } else {

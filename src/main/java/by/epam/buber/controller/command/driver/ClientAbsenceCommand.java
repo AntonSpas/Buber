@@ -30,7 +30,7 @@ public class ClientAbsenceCommand implements Command {
         if (order == null) {
             String stringOrderId = request.getParameter("id");
             Integer orderId = Integer.parseInt(stringOrderId);
-            order = service.findById(orderId);
+            order = service.getById(orderId);
         }
         Integer orderId = order.getId();
         Integer clientId = order.getClientId();

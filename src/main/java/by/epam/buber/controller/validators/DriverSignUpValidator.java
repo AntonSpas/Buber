@@ -16,13 +16,6 @@ public class DriverSignUpValidator extends AbstractValidator{
     private static final String CAR_MODEL_PATTERN = "^[a-zA-Z]{2,16}( \\p{Graph}+)+$";
     private static final String CAR_NUMBER_PATTERN = "^\\d{4} [A-Z]{2}-[1-7]$";
 
-    /*private static final Pattern PASSWORD_PATTERN = Pattern.compile(
-            "(?=.{2,20}$)\\S+");
-    //    "(?=.{6,16}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
-    private static final Pattern NAME_PATTERN = Pattern.compile("(?=.{2,20}$)\\S+");
-    private static final Pattern EMAIL_PATTERN = Pattern.compile(
-            "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);*/
-
     @Override
     public boolean isValid(List<String> fields, HttpServletRequest request) {
         String message = "";

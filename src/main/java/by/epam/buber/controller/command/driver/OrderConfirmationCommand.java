@@ -31,7 +31,7 @@ public class OrderConfirmationCommand implements Command {
         if (order == null) {
             String stringOrderId = request.getParameter("id");
             orderId = Integer.parseInt(stringOrderId);
-            order = service.findById(orderId);
+            order = service.getById(orderId);
         }
         service.executeTransfer(order);
         if (orderId != null) {

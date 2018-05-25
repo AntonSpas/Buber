@@ -73,7 +73,7 @@ public class ConnectionPool {
     }
 
     public ProxyConnection takeConnection() {
-        ProxyConnection connection = null;
+        ProxyConnection connection;
             lock.lock();
             try {
                 semaphore.acquire();

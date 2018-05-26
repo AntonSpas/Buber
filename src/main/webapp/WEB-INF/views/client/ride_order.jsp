@@ -12,7 +12,6 @@
             <h4><fmt:message key="ride_order"/></h4>
             <label for="type"><fmt:message key="car_type"/></label>
             <select class="form-control" id="type" name="car_type" required>
-                <option selected disabled><fmt:message key="choose_car_type"/></option>
                 <option value="ECONOMY"><fmt:message key="ECONOMY"/></option>
                 <option value="PREMIUM"><fmt:message key="PREMIUM"/></option>
                 <option value="LARGE"><fmt:message key="LARGE"/></option>
@@ -21,7 +20,6 @@
         <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
             <label for="destination"><fmt:message key="destination"/></label>
             <select class="form-control" id="destination" name="dest_street" required>
-                <option selected disabled><fmt:message key="choose_destination"/></option>
                 <option value="Aeroflotskaya"><fmt:message key="Aeroflotskaya"/></option>
                 <option value="Bogdanovicha"><fmt:message key="Bogdanovicha"/></option>
                 <option value="Chaykovskogo"><fmt:message key="Chaykovskogo"/></option>

@@ -65,7 +65,6 @@
         <div class="form-group col-lg-4 col-md-6 col-sm-8 offset-lg-4 offset-md-3 offset-sm-2">
             <label for="type">${car_type}</label>
             <select class="form-control" id="type" name="car_type" required>
-                <option selected disabled><fmt:message key="choose_car_type"/></option>
                 <option value="ECONOMY"><fmt:message key="ECONOMY"/></option>
                 <option value="PREMIUM"><fmt:message key="PREMIUM"/></option>
                 <option value="LARGE"><fmt:message key="LARGE"/></option>

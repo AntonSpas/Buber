@@ -23,9 +23,7 @@ public class ConnectionPool {
     private static LinkedList<ProxyConnection> connections = new LinkedList<>();
     private static AtomicBoolean isCreated = new AtomicBoolean();
     private static ReentrantLock lock = new ReentrantLock();
-
     private static Semaphore semaphore;
-
     private static int poolSize;
 
     private static final Logger logger = LoggerFactory.getLogger(ConnectionPool.class);
@@ -105,7 +103,7 @@ public class ConnectionPool {
                 if(instance == null) {
                     instance = new ConnectionPool();
                     init();
-                    isCreated.set(true);
+                    isCreated.getAndSet(true);
                 }
             }
             finally {

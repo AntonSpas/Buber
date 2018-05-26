@@ -40,7 +40,7 @@
             <select class="form-control" id="language" name="language" onchange="submit()">
                 <option value="en" ${language == 'en' ? 'selected' : ''}>En</option>
                 <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ру</option>
-                <option value="by" ${language == 'by' ? 'selected' : ''}>Бел</option>
+                <option value="by" ${language == 'by' ? 'selected' : ''}>Блр</option>
             </select>
         </form>
         <c:if test="${!simple}">

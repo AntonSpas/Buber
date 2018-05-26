@@ -37,9 +37,12 @@
     <div class="row centered">
         <br><br>
         <div class="col-lg-12 col-lg-offset-2">
-            <h4><fmt:message key="benefits"/></h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-            <p><br><br></p>
+            <h4><fmt:message key="about"/></h4>
+            <p><fmt:message key="about_text"/></p>
+            <br>
+            <h4><fmt:message key="safety"/></h4>
+            <p><fmt:message key="safety_text"/></p>
+            <br>
         </div>
     </div>
 </div>

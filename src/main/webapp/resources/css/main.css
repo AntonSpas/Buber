@@ -426,3 +426,14 @@ body, wrapper {
 .flex-fill {
 	flex:1 1 auto;
 }
+
+.link{
+	color: #008080;
+}
+
+.link:hover,
+.link:focus {
+	color: #11939A;
+	text-decoration: none;
+	outline: 0;
+}

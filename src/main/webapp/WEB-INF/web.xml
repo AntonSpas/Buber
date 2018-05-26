@@ -20,6 +20,20 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ExceptionHandler</servlet-name>
+        <servlet-class>by.epam.buber.controller.ExceptionHandler</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ExceptionHandler</servlet-name>
+        <url-pattern>/ExceptionHandler</url-pattern>
+    </servlet-mapping>
+
+    <error-page>
+        <location>/ExceptionHandler</location>
+    </error-page>
+
     <welcome-file-list>
         <welcome-file>/WEB-INF/views/home.jsp</welcome-file>
     </welcome-file-list>

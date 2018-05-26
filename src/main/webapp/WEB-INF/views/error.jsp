@@ -23,10 +23,33 @@
 <div class="container">
     <h1 class="alert alert-danger centered"><fmt:message key="oops" /></h1>
 
-    <br><br>
-    <h3>
-        <strong><fmt:message key="${error}" /></strong>
-    </h3>
+    <h4 class="centered"><fmt:message key="error_details" /></h4>
+
+    <h2><fmt:message key="details" /></h2>
+    <c:choose>
+        <c:when test="${from_handler}">
+            <ul>
+                <c:if test="${not empty statusCode}">
+                    <li><strong><fmt:message key="code" />: </strong>${statusCode}</li>
+                </c:if>
+                <c:if test="${not empty exceptionName}">
+                    <li><strong><fmt:message key="exception" />: </strong>${exceptionName}</li>
+                </c:if>
+                <c:if test="${not empty message}">
+                    <li><strong><fmt:message key="exception_message" />: </strong>${message}</li>
+                </c:if>
+                <c:if test="${not empty requsetUri}">
+                    <li><strong><fmt:message key="requested_uri" />: </strong>${requestUri}</li>
+                </c:if>
+            </ul>
+        </c:when>
+        <c:otherwise>
+            <br><br>
+            <h3 class="alert-danger>
+                <strong><fmt:message key="${error}" /></strong>
+            </h3>
+        </c:otherwise>
+    </c:choose>
 
     <br><br>
     <h4><a class="link" href="${home}"><fmt:message key="home_path"/></a></h4>

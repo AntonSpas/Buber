@@ -45,9 +45,7 @@
         </c:when>
         <c:otherwise>
             <br><br>
-            <h3 class="alert-danger>
-                <strong><fmt:message key="${error}" /></strong>
-            </h3>
+            <h3 class="alert"><strong><fmt:message key="${error}" /></strong></h3>
         </c:otherwise>
     </c:choose>
 

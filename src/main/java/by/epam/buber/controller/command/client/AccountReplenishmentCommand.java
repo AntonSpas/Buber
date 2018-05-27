@@ -22,7 +22,6 @@ public class AccountReplenishmentCommand implements Command {
     private static final String ACCOUNT_REPLENISHMENT =
             "/client/replenish-account";
     private static final String REPLENISHED_LOG = "Client %d put %s $ to the account";
-    private static final String VALIDATION_LOG = "Account replenishment form is not valid";
 
     private static final Logger logger = LoggerFactory.getLogger(ClientLoginCommand.class);
 
@@ -35,7 +34,7 @@ public class AccountReplenishmentCommand implements Command {
         List<String> fields = Collections.singletonList(AmountValue);
         ReplenishmentValidator validator = new ReplenishmentValidator();
         if (!validator.isValid(fields, request)) {
-            logger.warn(VALIDATION_LOG);
+            logger.warn("Account replenishment form is not valid");
             return new CommandResult(ACCOUNT_REPLENISHMENT, Action.REDIRECT);
         }
         BigDecimal amount = new BigDecimal(AmountValue);

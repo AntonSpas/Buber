@@ -24,9 +24,8 @@ import java.util.List;
 public class DriverLoginCommand implements Command {
     private static final String DRIVER_LOGIN = "/driver-login";
     private static final String AVAILABLE_ORDERS = "/driver/available-orders";
-    private static final String ERROR = "/WEB-INF/views/error.jsp";
+    private static final String ERROR = "/error";
     private static final String LOGIN_FAULT_MESSAGE = "login_fault_error";
-    private static final String VALIDATION_LOG = "Driver login form is not valid";
     private static final String LOGGED_IN_LOG = "Driver %d successfully logged in";
 
     private static final Logger logger = LoggerFactory.getLogger(DriverLoginCommand.class);
@@ -41,18 +40,18 @@ public class DriverLoginCommand implements Command {
         List<String> fields = Arrays.asList(email, password);
         LoginValidator validator = new LoginValidator();
         if (!validator.isValid(fields, request)) {
-            logger.warn(VALIDATION_LOG);
+            logger.warn("Driver login form is not valid");
             return new CommandResult(DRIVER_LOGIN, Action.REDIRECT);
         }
         Driver driver;
+        HttpSession session = request.getSession();
         try {
             driver = service.login(email, password);
         } catch (ServiceException exception) {
             logger.warn(exception.getMessage(), exception);
-            request.setAttribute("error", LOGIN_FAULT_MESSAGE);
-            return new CommandResult(ERROR, Action.FORWARD);
+            session.setAttribute("error", LOGIN_FAULT_MESSAGE);
+            return new CommandResult(ERROR, Action.REDIRECT);
         }
-        HttpSession session = request.getSession();
         session.setAttribute("driver_id", driver.getId());
         session.setAttribute("car_type", driver.getCarType());
         session.setAttribute("driver_name", driver.getName());

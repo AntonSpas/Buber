@@ -6,7 +6,7 @@ import by.epam.buber.controller.command.ViewProviderCommand;
 import by.epam.buber.controller.command.admin.*;
 import by.epam.buber.controller.command.client.*;
 import by.epam.buber.controller.command.driver.*;
-import by.epam.buber.util.ServiceException;
+import by.epam.buber.util.CommandException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,7 +30,7 @@ public class CommandFactory {
     private static final String CONFIRM_ORDER = "/driver/confirm";
     private static final String CLIENT_ABSENCE = "/driver/absence";
 
-    public static Command create(HttpServletRequest request) throws ServiceException {
+    public static Command create(HttpServletRequest request) throws CommandException {
         String requestURI = request.getRequestURI();
         String method = request.getMethod();
 
@@ -78,7 +78,7 @@ public class CommandFactory {
                     case ACCOUNT_REPLENISHMENT:
                         return new AccountReplenishmentCommand();
                     default:
-                        throw new ServiceException("Unsupported command!");
+                        throw new CommandException("Unsupported command!");
                 }
             }
         }

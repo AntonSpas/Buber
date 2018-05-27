@@ -158,3 +158,5 @@ exception=Исключение
 exception_message=Сообщение исключения
 requested_uri=Запрашиваемый URI
 details=Детали
+duplicate_email_error=Клиент с данным почтовым адресом уже зарегистрирован
+duplicate_driver_email_error=Водитель с данным почтовым адресом уже зарегистрирован

@@ -23,7 +23,8 @@ import java.util.List;
 public class DriverRegistrationCommand implements Command {
     private static final String CAR_REGISTRATION = "/admin/register-car";
     private static final String ADMIN_HOME = "/admin/administration";
-    private static final String VALIDATION_LOG = "Driver registration form is not valid";
+    private static final String ERROR = "/error";
+    private static final String DUPLICATE_EMAIL_MESSAGE = "duplicate_driver_email_error";
     private static final String REGISTERED_LOG =
             "Driver %d was successfully registered by admin %d";
 
@@ -46,12 +47,19 @@ public class DriverRegistrationCommand implements Command {
                 driver.getCarNumber());
         Validator validator = new DriverSignUpValidator();
         if (!validator.isValid(fields, request)) {
-            logger.warn(VALIDATION_LOG);
+            logger.warn("Driver registration form is not valid");
             return new CommandResult(CAR_REGISTRATION, Action.REDIRECT);
         }
         DriverService service = new DriverServiceImpl();
-        service.save(driver);
         HttpSession session = request.getSession();
+        try {
+            service.checkPresence(driver.getEmail());
+        } catch (ServiceException exception) {
+            logger.warn(exception.getMessage(), exception);
+            session.setAttribute("error", DUPLICATE_EMAIL_MESSAGE);
+            return new CommandResult(ERROR, Action.REDIRECT);
+        }
+        service.save(driver);
         Integer adminId = (Integer) session.getAttribute("admin_id");
         logger.info(String.format(REGISTERED_LOG, driver.getId(), adminId));
         return new CommandResult(ADMIN_HOME, Action.REDIRECT);

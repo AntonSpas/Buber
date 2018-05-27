@@ -21,7 +21,7 @@ public class DriverServiceImpl implements DriverService {
                 connectionPool.takeConnection())) {
             Connection connection = connectionWrapper.getConnection();
             DriverDAO dao = new DriverDAO(connection);
-            Optional<Driver> driverOptional = Optional.ofNullable(dao.getByEmail(email));
+            Optional<Driver> driverOptional = Optional.ofNullable(dao.findByEmail(email));
             Driver driver = driverOptional.orElseThrow(() ->
                     new ServiceException("Driver not found for email " + email));
             password = DigestUtils.sha1Hex(password);
@@ -29,6 +29,20 @@ public class DriverServiceImpl implements DriverService {
                 return driver;
             } else {
                 throw new ServiceException("Wrong password for driver's email " + email);
+            }
+        } catch (DAOException exception) {
+            throw new ServiceException(exception.getMessage(), exception);
+        }
+    }
+
+    public void checkPresence(String email) throws ServiceException{
+        try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
+                connectionPool.takeConnection())) {
+            Connection connection = connectionWrapper.getConnection();
+            DriverDAO dao = new DriverDAO(connection);
+            Driver driver = dao.findByEmail(email);
+            if (driver != null) {
+                throw new ServiceException("Driver with " + email + " already present");
             }
         } catch (DAOException exception) {
             throw new ServiceException(exception.getMessage(), exception);

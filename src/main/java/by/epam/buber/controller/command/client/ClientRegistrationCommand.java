@@ -23,7 +23,8 @@ import java.util.List;
 public class ClientRegistrationCommand implements Command {
     private static final String SIGN_UP = "/sign-up";
     private static final String CLIENT_HOME = "/client/client-home";
-    private static final String VALIDATION_LOG = "Client registration form is not valid";
+    private static final String ERROR = "/error";
+    private static final String DUPLICATE_EMAIL_MESSAGE = "duplicate_email_error";
     private static final String REGISTERED_LOG = "Client %d successfully registered and logged in";
 
     private static final Logger logger = LoggerFactory.getLogger(ClientRegistrationCommand.class);
@@ -42,13 +43,20 @@ public class ClientRegistrationCommand implements Command {
                 client.getPhone());
         Validator validator = new SignUpValidator();
         if (!validator.isValid(fields, request)) {
-            logger.warn(VALIDATION_LOG);
+            logger.warn("Client registration form is not valid");
             return new CommandResult(SIGN_UP, Action.REDIRECT);
         }
 
         ClientService service = new ClientServiceImpl();
-        client = service.save(client);
         HttpSession session = request.getSession();
+        try {
+            service.checkPresence(client.getEmail());
+        } catch (ServiceException exception) {
+            logger.warn(exception.getMessage(), exception);
+            session.setAttribute("error", DUPLICATE_EMAIL_MESSAGE);
+            return new CommandResult(ERROR, Action.REDIRECT);
+        }
+        client = service.save(client);
         session.setAttribute("client_id", client.getId());
         logger.info(String.format(REGISTERED_LOG, client.getId()));
         return new CommandResult(CLIENT_HOME, Action.REDIRECT);

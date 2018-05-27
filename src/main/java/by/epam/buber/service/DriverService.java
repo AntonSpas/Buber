@@ -16,6 +16,14 @@ public interface DriverService {
     Driver login(String email, String password) throws ServiceException;
 
     /**
+     * Checks if driver already present
+     *
+     * @param email driver email
+     * @throws ServiceException if driver already present or any other exceptions occurs
+     */
+    void checkPresence(String email) throws ServiceException;
+
+    /**
      * Saves driver to underlying data storage
      *
      * @param driver driver to save

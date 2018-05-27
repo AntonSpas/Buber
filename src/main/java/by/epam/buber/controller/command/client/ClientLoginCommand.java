@@ -28,10 +28,9 @@ public class ClientLoginCommand implements Command {
     private static final String CLIENT_LOGIN = "/client-login";
     private static final String CLIENT_HOME = "/client/client-home";
     private static final String RIDE = "/client/ride";
-    private static final String ERROR = "/WEB-INF/views/error.jsp";
+    private static final String ERROR = "/error";
     private static final String LOGIN_FAULT_MESSAGE = "login_fault_error";
     private static final String BANNED_MESSAGE = "banned_error";
-    private static final String VALIDATION_LOG = "Client login form is not valid";
     private static final String BANNED_LOG = "Client %d tried to login, but he is banned";
     private static final String LOGGED_IN_LOG = "Client %d successfully logged in";
 
@@ -46,23 +45,23 @@ public class ClientLoginCommand implements Command {
         List<String> fields = Arrays.asList(email, password);
         LoginValidator validator = new LoginValidator();
         if (!validator.isValid(fields, request)) {
-            logger.warn(VALIDATION_LOG);
+            logger.warn("Client login form is not valid");
             return new CommandResult(CLIENT_LOGIN, Action.REDIRECT);
         }
         Client client;
+        HttpSession session = request.getSession();
         try {
             client = service.login(email, password);
         } catch (ServiceException exception) {
             logger.warn(exception.getMessage(), exception);
-            request.setAttribute("error", LOGIN_FAULT_MESSAGE);
-            return new CommandResult(ERROR, Action.FORWARD);
+            session.setAttribute("error", LOGIN_FAULT_MESSAGE);
+            return new CommandResult(ERROR, Action.REDIRECT);
         }
         if (!client.getEnabled()){
             logger.info(String.format(BANNED_LOG, client.getId()));
-            request.setAttribute("error", BANNED_MESSAGE);
-            return new CommandResult(ERROR, Action.FORWARD);
+            session.setAttribute("error", BANNED_MESSAGE);
+            return new CommandResult(ERROR, Action.REDIRECT);
         }
-        HttpSession session = request.getSession();
         session.setAttribute("client_id", client.getId());
         session.setAttribute("client_name", client.getName());
         session.setAttribute("userType", UserType.CLIENT);

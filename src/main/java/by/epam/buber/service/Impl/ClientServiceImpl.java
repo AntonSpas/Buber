@@ -38,6 +38,20 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    public void checkPresence(String email) throws ServiceException{
+        try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
+                connectionPool.takeConnection())) {
+            Connection connection = connectionWrapper.getConnection();
+            ClientDAO dao = new ClientDAO(connection);
+            Client client = dao.findByEmail(email);
+            if (client != null) {
+                throw new ServiceException("Client with " + email + " already present");
+            }
+        } catch (DAOException exception) {
+            throw new ServiceException(exception.getMessage(), exception);
+        }
+    }
+
     public Client save(Client client) throws ServiceException{
         try (ConnectionWrapper connectionWrapper = new ConnectionWrapper(
                 connectionPool.takeConnection())) {

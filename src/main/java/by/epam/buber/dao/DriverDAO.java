@@ -46,7 +46,7 @@ public class DriverDAO extends AbstractDAO {
      * @return founded driver or null if there is none
      * @throws DAOException if any exceptions occurs in the dao layer
      */
-    public Driver getByEmail(String email) throws DAOException {
+    public Driver findByEmail(String email) throws DAOException {
         List<Driver> drivers = executeQuery(SQL_FIND_BY_EMAIL, email);
         if(drivers.isEmpty()) {
             return null;

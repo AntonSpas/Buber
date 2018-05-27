@@ -19,6 +19,14 @@ public interface ClientService {
     Client login(String email, String password) throws ServiceException;
 
     /**
+     * Checks if client already present
+     *
+     * @param email client email
+     * @throws ServiceException if client already present or any other exceptions occurs
+     */
+    void checkPresence(String email) throws ServiceException;
+
+    /**
      * Saves client to underlying data storage
      *
      * @param client client to save

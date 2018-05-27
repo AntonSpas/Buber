@@ -1,6 +1,7 @@
 package by.epam.buber.controller;
 
 import by.epam.buber.controller.command.Command;
+import by.epam.buber.util.CommandException;
 import by.epam.buber.util.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class FrontController extends HttpServlet{
                 requestDispatcher = request.getRequestDispatcher(view);
                 requestDispatcher.forward(request, response);
             }
-        } catch (ServiceException exception) {
+        } catch (ServiceException | CommandException exception) {
             logger.warn(exception.getMessage(), exception);
             request.setAttribute("error", ERROR_MESSAGE);
             requestDispatcher = request.getRequestDispatcher(ERROR);

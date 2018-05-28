@@ -22,6 +22,8 @@ public class CommandFactory {
     private static final String ORDERS = "/admin/orders";
     private static final String CLIENTS = "/admin/clients";
     private static final String CLIENT_BANNING = "/admin/ban-client";
+    private static final String CLIENT = "/admin/client-info";
+    private static final String DRIVER = "/admin/driver-info";
     private static final String RIDE_ORDER = "/client/ride-order";
     private static final String ACCOUNT_REPLENISHMENT = "/client/replenish-account";
     private static final String RIDE = "/client/ride";
@@ -53,6 +55,10 @@ public class CommandFactory {
                         return new ClientAbsenceCommand();
                     case CLIENT_BANNING:
                         return new ClientBanningCommand();
+                    case CLIENT:
+                        return new ClientReceivingCommand();
+                    case DRIVER:
+                        return new DriverReceivingCommand();
                     case ORDERS:
                         return new OrdersReceivingCommand();
                     case CLIENTS:

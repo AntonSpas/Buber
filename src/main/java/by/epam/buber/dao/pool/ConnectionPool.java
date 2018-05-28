@@ -14,11 +14,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
-    private static final String CREATED_LOG = "Connection Pool was successfully created";
-    private static final String CREATION_FAULT_LOG = "Connection Pool creation fault";
-    private static final String TAKING_CONNECTION_LOG =
-            "Taking connection from Connection Pool fault";
-
     private static ConnectionPool instance;
     private static LinkedList<ProxyConnection> connections = new LinkedList<>();
     private static AtomicBoolean isCreated = new AtomicBoolean();
@@ -62,11 +57,11 @@ public class ConnectionPool {
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
                 connections.add(proxyConnection);
             }
-            logger.info(CREATED_LOG);
+            logger.info("Connection Pool was successfully created");
 
         } catch (ClassNotFoundException | SQLException exception) {
-            logger.error(CREATION_FAULT_LOG, exception);
-            throw new IllegalStateException(CREATION_FAULT_LOG, exception);
+            logger.error("Connection Pool creation fault", exception);
+            throw new IllegalStateException("Connection Pool creation fault", exception);
         }
     }
 
@@ -77,8 +72,8 @@ public class ConnectionPool {
                 semaphore.acquire();
                 connection = connections.remove();
             } catch (InterruptedException exception) {
-                logger.error(TAKING_CONNECTION_LOG, exception);
-                throw new IllegalStateException(TAKING_CONNECTION_LOG, exception);
+                logger.error("Taking connection from Connection Pool fault", exception);
+                throw new IllegalStateException("Taking connection from Connection Pool fault", exception);
             } finally {
                 lock.unlock();
             }

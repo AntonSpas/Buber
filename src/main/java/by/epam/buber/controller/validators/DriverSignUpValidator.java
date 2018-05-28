@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 public class DriverSignUpValidator extends AbstractValidator{
 
-    private static final String NAME_PATTERN = "^[А-ЯЁ][а-яё]*|[A-Z][a-z]*$";
+    private static final String NAME_PATTERN = "^[А-ЯЁЎІ][а-яёўі']*|[A-Z][a-z]*$";
     private static final String EMAIL_PATTERN = "^[\\w._-]+@[\\w.-]+\\.[a-zA-Z]{2,3}$";
     private static final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*\\d)\\S{6,16}$";
     private static final String PHONE_PATTERN = "^\\+375\\((29|33|44|25)\\)\\d{3}-\\d{2}-\\d{2}$";
